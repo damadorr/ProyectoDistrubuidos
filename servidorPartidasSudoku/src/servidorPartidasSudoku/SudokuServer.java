@@ -11,29 +11,35 @@ import java.util.concurrent.Executors;
 public class SudokuServer {
 
 	public static void main(String[] args) {
-		ServerSocket ss=null;
+		
+		ServerSocket ss = null;
+		ExecutorService pool = Executors.newCachedThreadPool();
+		
 		try {
-			ss= new ServerSocket(6789);
+			ss= new ServerSocket(6666);
+			
 			Socket cliente1= null;
 			Socket cliente2= null;
 			Socket cliente3= null;
 			PrintStream ps1= null;
 			PrintStream ps2= null;
 			PrintStream ps3= null;
-			ExecutorService pool=null;
+			
 			while(true){
 				try{
 					//conexion de 3 clientes de una partida.
 					cliente1=ss.accept();
 					ps1= new PrintStream(cliente1.getOutputStream());
-					ps1.println("Esperando 2 rivales más");
+					ps1.println("Esperando 2 rivales más"); //HACE FALTA QUE EL CLIENTE LO LEA (?)
 					ps1.flush();
+					
 					cliente2=ss.accept();
 					ps2= new PrintStream(cliente2.getOutputStream());
 					ps2.println("Esperando 1 rival más");
 					ps2.flush();
 					ps1.println("Esperando 1 rival más");
 					ps1.flush();
+					
 					cliente3=ss.accept();
 					ps3= new PrintStream(cliente3.getOutputStream());
 					ps3.println("Comienza la partida");
@@ -42,8 +48,10 @@ public class SudokuServer {
 					ps2.flush();
 					ps1.println("Comienza la partida");
 					ps1.flush();
-					pool= Executors.newCachedThreadPool();
+					
+					//pool= Executors.newCachedThreadPool(); darle valor fuera xq si no creas uno nuevo cada vez (?)
 					pool.submit(new JuezPartida(cliente1, cliente2, cliente3));
+					
 				}catch(IOException e){
 					e.printStackTrace();
 				}
@@ -52,8 +60,10 @@ public class SudokuServer {
 			e.printStackTrace();
 		}finally{
 			cerrar(ss);
+			pool.shutdown(); //not sure
 		}
 	}
+	
 	public static void cerrar(Closeable o){
 			try {
 				if(o!=null){
