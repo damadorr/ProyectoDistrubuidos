@@ -1,4 +1,3 @@
-package servidorPartidasSudoku;
 
 import java.util.*;
 public class Principal {

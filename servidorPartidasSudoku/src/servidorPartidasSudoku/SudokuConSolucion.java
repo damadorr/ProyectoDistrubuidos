@@ -1,4 +1,4 @@
-package servidorPartidasSudoku;
+
 
 import java.io.Serializable;
 import java.util.Random;
@@ -15,6 +15,30 @@ public class SudokuConSolucion extends Sudoku implements Serializable {
 		this.construirGrafoInicial();
 		
 	}
+	
+	public SudokuConSolucion copiaResuelta() {
+		int [][] aux = new int [matriz.length][matriz.length]; //creamos una copia de la matriz
+		for(int i=0; i<matriz.length; i++){
+			for(int j=0; j<matriz.length;j++){
+				aux [i][j] = matriz [i][j];
+			}
+		}
+		SudokuConSolucion auxSudoku = new SudokuConSolucion(aux);
+		auxSudoku.resolver();
+		return auxSudoku;
+	}
+	
+	public boolean sonIguales(SudokuConSolucion s) {
+		for(int i=0; i<matriz.length; i++){
+			for(int j=0; j<matriz.length;j++){
+				if(!(s.matriz[i][j] == this.matriz[i][j])) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
 	
 	public void resolver(){ //resuelve un sudoku
 		boolean aux = this.gr.colorear(this.getNumFilas()); //coloreamos el grafo

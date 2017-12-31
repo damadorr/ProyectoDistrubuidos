@@ -1,4 +1,4 @@
-package servidorPartidasSudoku;
+
 
 import java.net.Socket;
 import java.util.concurrent.BrokenBarrierException;
@@ -18,7 +18,7 @@ public class JuezPartida implements Runnable {
 	public void run() {
 		int [][] m= new int[9] [9];
 		SudokuConSolucion sudoku= new SudokuConSolucion(m);
-		sudoku.crearSudoku(10);
+		sudoku.crearSudoku(25);
 		try {
 			
 			final CyclicBarrier cb = new CyclicBarrier(3+1);

@@ -1,6 +1,6 @@
-package servidorPartidasSudoku;
 
 import java.io.Closeable;
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.ServerSocket;
@@ -24,6 +24,7 @@ public class SudokuServer {
 			PrintStream ps1= null;
 			PrintStream ps2= null;
 			PrintStream ps3= null;
+			DataInputStream respuesta = null;
 			
 			while(true){
 				try{
@@ -37,11 +38,10 @@ public class SudokuServer {
 					ps2= new PrintStream(cliente2.getOutputStream());
 					ps2.println("Esperando 1 rival más");
 					ps2.flush();
-					ps1.println("Esperando 1 rival más");
-					ps1.flush();
 					
 					cliente3=ss.accept();
 					ps3= new PrintStream(cliente3.getOutputStream());
+					ps3.println("Encontrados 2 rivales");
 					ps3.println("Comienza la partida");
 					ps3.flush();
 					ps2.println("Comienza la partida");
@@ -49,8 +49,9 @@ public class SudokuServer {
 					ps1.println("Comienza la partida");
 					ps1.flush();
 					
-					//pool= Executors.newCachedThreadPool(); darle valor fuera xq si no creas uno nuevo cada vez (?)
 					pool.submit(new JuezPartida(cliente1, cliente2, cliente3));
+					
+					respuesta= new DataInputStream(cliente3.getInputStream());
 					
 				}catch(IOException e){
 					e.printStackTrace();

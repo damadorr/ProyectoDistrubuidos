@@ -1,4 +1,3 @@
-package servidorPartidasSudoku;
 
 import java.util.Scanner;
 
@@ -10,14 +9,11 @@ public class Interfaz {
 		this.s = sudoku;
 	}
 	
-	public SudokuConSolucion getSudoku() {
-		return this.s;
-	}
-	//USAR GET O DEVOLVER EL SUDOKU
 	//PONER UN TIEMPO PARA QUE SALGA AUTOMÁTICAMENTE SI NO SE HACE NADA
-	public SudokuConSolucion mostrar() {
+	public void mostrar() {
 		boolean terminado = false;
 		Scanner entrada = new Scanner (System.in);
+		s.mostrarSudoku(n);
 		
 		do{
 			System.out.println("Escoge una opción: ");
@@ -46,7 +42,7 @@ public class Interfaz {
 			    if(s.correctoAñadir(fila, columna)){ // si es correcto añadir, la añade; si no muestra un mensaje de error
 			    	s.añadirNumeroACasilla(fila, columna, num);
 			    	s.mostrarSudoku(n);
-					System.out.println("¿Correcto? : " + s.gr.esColorValido(fila*s.getNumFilas()+columna+1,num)); //nos dice si despues de añadir se puede resolver el sudoku
+//					System.out.println("¿Correcto? : " + s.gr.esColorValido(fila*s.getNumFilas()+columna+1,num)); //nos dice si despues de añadir se puede resolver el sudoku
 //					if(!s.gr.esColorValido(fila*s.getNumFilas()+columna+1,num)){ //y muestra un mesaje si no se puede resolver
 //			    		System.out.println("El sudoku no tiene solución para el número introducido, borralo e introduce otro");
 //			    	}
@@ -78,6 +74,8 @@ public class Interfaz {
 				break;
 				
 			case(4):
+				s.resolver();
+				s.mostrarSudoku(n);
 				terminado = true;
 				break;
 				
@@ -94,6 +92,5 @@ public class Interfaz {
 		}while(!terminado);
 		
 		entrada.close();
-		return s;
 	}
 }
