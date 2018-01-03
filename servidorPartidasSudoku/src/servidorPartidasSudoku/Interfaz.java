@@ -9,19 +9,22 @@ public class Interfaz {
 		this.s = sudoku;
 	}
 	
-	//PONER UN TIEMPO PARA QUE SALGA AUTOMÁTICAMENTE SI NO SE HACE NADA
+	public SudokuConSolucion getSudoku() {
+		return this.s;
+	}
+	
 	public void mostrar() {
 		boolean terminado = false;
 		Scanner entrada = new Scanner (System.in);
 		s.mostrarSudoku(n);
 		
-		do{
+		//do{
 			System.out.println("Escoge una opción: ");
 			System.out.println("  1. Colocar un número ");
 			System.out.println("  2. Eliminar un número ");
 			System.out.println("  3. Volver al inicio ");
 			System.out.println("  4. Sudoku terminado");
-			System.out.println("  5. Abandonar partida "); //UN JUGADOR PUEDE ABANDONAR LA PARTIDA ?
+			System.out.println("  5. Abandonar partida ");
 			int c = entrada.nextInt();
 			
 			while(c<1 || c>5){ //si la opcion introducida no existe, se pide de nuevo
@@ -74,7 +77,8 @@ public class Interfaz {
 				break;
 				
 			case(4):
-				s.resolver();
+				//s.resolver(); //PARA PROBAR QUE LO RESUELVE BIEN
+				s = s.copiaResuelta();
 				s.mostrarSudoku(n);
 				terminado = true;
 				break;
@@ -89,8 +93,8 @@ public class Interfaz {
 				break;
 			}
 			
-		}while(!terminado);
+		//}while(!terminado);
 		
-		entrada.close();
+		//entrada.close(); //NOSUCHELEMENTSEXCEPTION
 	}
 }

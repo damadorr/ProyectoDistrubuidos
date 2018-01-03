@@ -1,11 +1,10 @@
 
-
 import java.io.Serializable;
 import java.util.Random;
 
 public class SudokuConSolucion extends Sudoku implements Serializable {
 
-	public GrafoConColores gr; //declarado public para poder usarlo en el main
+	private GrafoConColores gr; //declarado public para poder usarlo en el main
 	/// DEBERÍA SER PRIVADO Y DESDE EL MAIN USAR SOLO LOS MÉTODOS DE SudokuConSolucion
 	private final int tamaño = matriz.length;
 	
@@ -81,18 +80,18 @@ public class SudokuConSolucion extends Sudoku implements Serializable {
 	}
 	public void volverEstadoInicial(){ //devuelve el valor inicial que tenia una casilla
 		super.volverEstadoInicial(); //llama al de padre
-		/// MAL, FALTA MODIFICAR EL GRAFO CON COLORES
+		this.construirGrafoInicial(); /// MAL, FALTA MODIFICAR EL GRAFO CON COLORES //NO SE SAE
 	}
 	
 	//Reescrito y creado por mi para comprobaciones
 	public boolean correctoAñadir(int fila, int columna){ //devuelve verdadero si es correcto añadir en una posicion
-		if((this.matriz [fila] [columna] == 0) && (this.esPosibleResolver())){ /// MAL, HABRÍA QUE COMPROBAR SI ES POSIBLE RESOLVER DESPUÉS DE AÑADIRLO
+		if((this.matriz [fila] [columna] == 0) /*&& (this.esPosibleResolver())*/){ /// MAL, HABRÍA QUE COMPROBAR SI ES POSIBLE RESOLVER DESPUÉS DE AÑADIRLO
 			return true;
 		}
 		return false;
 	}
 	public boolean correctoBorrar(int fila, int columna){ //devuelve verdadero si es correcto eliminar en una posicion
-		if((this.matriz [fila] [columna] != 0) && (this.esPosibleResolver())){
+		if((this.matriz [fila] [columna] != 0) /*&& (this.esPosibleResolver())*/){
 			return true;
 		}
 		return false;

@@ -7,8 +7,9 @@ import java.io.ObjectInputStream;
 import java.io.PrintStream;
 import java.net.Socket;
 
-//COMO HACER UNA COPIA DEL SUDOKU PARA RESOLVERLO
-//COMO NOTIFICAR AL RESTO DE LOS CLIENTES QUE UNO A TERMINADO
+//COMO SABER SI EL SOCKET ESTA CERRADO (interrumpir metodo mostrar)
+//COMPROBAR QUE ES VALIDO
+
 
 public class SudokuClient {
 	@SuppressWarnings("deprecation")
@@ -33,25 +34,22 @@ public class SudokuClient {
 			
 			Interfaz inter = new Interfaz(s);
 			boolean terminado = false;
-			while(!terminado) {
+			while(!terminado && !cliente.isClosed()) {
 				inter.mostrar(); //Si alguno de los otros clientes termina el sudoku, deberá terminar
-				if(s.equals(sResuelto)) { //Redefinido 
+				if(inter.getSudoku() == null/*s.equals(null)*/){ //XQ
+					System.out.println("Has abandonado");
+					out.print("abandonado");
+					terminado = true;
+					break;
+				} else if(inter.getSudoku().equals(sResuelto)) { //Redefinido 
 					System.out.println("Sudoku correcto");
-					out.print("Su sudoku es correcto");
+					out.print("correcto");
 					terminado = true;
 				} else {
 					System.out.println("Sudoku erróneo, inténtelo de nuevo");
 				}
-				if(s == null){ //XQ
-					System.out.println("Has abandonado");
-					out.print("Ha abandonado");
-					terminado = true;
-				} 
 			}
-			
-			
-
-			
+			System.out.println(in.readLine());
 			
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();

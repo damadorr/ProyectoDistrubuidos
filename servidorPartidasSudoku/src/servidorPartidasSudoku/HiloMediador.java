@@ -1,51 +1,46 @@
 
 
 import java.io.Closeable;
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintStream;
 import java.net.Socket;
-import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.CyclicBarrier;
 
-public class HiloMediador extends Thread{
+public class HiloMediador implements Runnable{
 	
 	private Socket socket;
+	private String cadena;
 	private Sudoku sudoku;
-	private CyclicBarrier cb;
+	//private CyclicBarrier cb;
 	
-	public HiloMediador(Socket so, Sudoku su, CyclicBarrier cb){
-		this.socket=so;
-		this.sudoku=su;
-		this.cb = cb;                       
-
-//		byte[] bytes =  bos.toByteArray(); // devuelve byte[]
-//
-//		ByteArrayInputStream bis= new ByteArrayInputStream(bytes); // bytes es el byte[]
-//		ObjectInputStream is = new ObjectInputStream(bis);
-//		Sudoku sudokuSolucion = (Sudoku)is.readObject();
-//		is.close();
+	public HiloMediador(Socket so, Sudoku su, String cadena){
+		this.socket = so;
+		this.sudoku = su;
+		this.cadena = cadena;
+		//this.cb = cb;                       
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void run(){
 		ObjectOutputStream os = null;
 		ObjectInputStream is = null;
-		PrintStream ps = null;
+		DataInputStream in = null;
+		
 		try {
 			os = new ObjectOutputStream (this.socket.getOutputStream()); //envía el sudoku al cliente
 			os.writeObject(this.sudoku);
 			
-			
-//			is = new ObjectInputStream(this.socket.getInputStream());
-//			SudokuConSolucion s=(SudokuConSolucion) is.readObject();//en la clase cliente se debe comprobar que el sudoku está resuelto correctamente antes de enviarlo.
-			ps= new PrintStream(this.socket.getOutputStream());
+			in = new DataInputStream(this.socket.getInputStream());
+			this.cadena = in.readLine();
+
+			/*ps= new PrintStream(this.socket.getOutputStream());
 			ps.println("enhorabuena, has ganado");
-			cerrar(this.socket);
+			cerrar(this.socket);*/
 			
-			cb.await(); //COMO SABER CUAL HA GANADO, Y MOSTRARSELO A LOS DEMÁS (?)
+			//cb.await(); //COMO SABER CUAL HA GANADO, Y MOSTRARSELO A LOS DEMÁS (?)
 			
-		} catch (IOException | InterruptedException | BrokenBarrierException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		} finally{
 			cerrar(os);
@@ -62,4 +57,5 @@ public class HiloMediador extends Thread{
 			e.printStackTrace();
 		}
 	}
+
 }
