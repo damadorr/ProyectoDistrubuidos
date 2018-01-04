@@ -48,8 +48,7 @@ public class Sudoku implements Serializable{
 				aux [i][j] = matrizInicial [i][j];
 			}
 		}
-		this.matriz = aux; //Le da el valor a matriz
-		/// PODRÍAS PONER LOS DATOS DIRECTAMENTE EN LA MATRIZ SIN CREAR OTRA MATRIZ PERO OK		
+		this.matriz = aux; //Le da el valor a matriz+
 	}
 	
 	public int valorInicial(int fila, int columna){ //devuelve el valor inicial que tenia una casilla
@@ -57,33 +56,7 @@ public class Sudoku implements Serializable{
 		return num;
 	}
 	
-	public void mostrarSudoku(int tamaño){ //muestra un sudoku de 4x4 o 9x9 dependiendo del tamaño pasado
-		/// SE PODRÍA HACER PARA TAMAÑO GENERAL
-		if(tamaño == 4){
-			int contadorlinea = 0; //usamos contadores para saber cuando escribir por pantalla
-			int contadorfila = -1;
-			System.out.println("-------------");
-			for(int i = 0; i < this.getNumFilas(); i++){ //para las filas
-				contadorfila++;
-				if(contadorfila == 2){
-					System.out.println("|-----------|");
-					contadorfila = 0;
-				}
-				System.out.print("| ");
-				for(int j = 0; j < this.getNumFilas(); j++){ //para las columnas
-					System.out.print(this.matriz[i][j] + " "); 
-					contadorlinea++;
-					if(contadorlinea == 2){
-						System.out.print("| ");
-						contadorlinea = 0;
-					}
-				}
-				System.out.println(" ");
-			}
-			System.out.println("-------------");
-		}
-		
-		if(tamaño == 9){ //igual que el de 4, pero para tamaño 9
+	public void mostrarSudoku(){ //muestra un sudoku de 9x9 
 			int contadorlinea = 0;
 			int contadorfila = -1;
 			System.out.println("-------------------------");
@@ -105,7 +78,6 @@ public class Sudoku implements Serializable{
 				System.out.println(" ");
 			}
 			System.out.println("-------------------------");
-		}
 		
 	}  
 	
@@ -128,4 +100,4 @@ public class Sudoku implements Serializable{
 	}
 
 	
-}/// OK
+}

@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 public class Interfaz {
 	private SudokuConSolucion s;
-	private int n = 9; //para el tamaño, modificar mostrar
 	
 	public Interfaz(SudokuConSolucion sudoku) {
 		this.s = sudoku;
@@ -16,11 +15,9 @@ public class Interfaz {
 	}
 	
 	public void mostrar() {
-		boolean terminado = false;
 		Scanner entrada = new Scanner (System.in);
-		s.mostrarSudoku(n);
+		s.mostrarSudoku();
 		
-		//do{
 			System.out.println("Escoge una opción: ");
 			System.out.println("  1. Colocar un número ");
 			System.out.println("  2. Eliminar un número ");
@@ -46,11 +43,7 @@ public class Interfaz {
 			    
 			    if(s.correctoAñadir(fila, columna)){ // si es correcto añadir, la añade; si no muestra un mensaje de error
 			    	s.añadirNumeroACasilla(fila, columna, num);
-			    	s.mostrarSudoku(n);
-//					System.out.println("¿Correcto? : " + s.gr.esColorValido(fila*s.getNumFilas()+columna+1,num)); //nos dice si despues de añadir se puede resolver el sudoku
-//					if(!s.gr.esColorValido(fila*s.getNumFilas()+columna+1,num)){ //y muestra un mesaje si no se puede resolver
-//			    		System.out.println("El sudoku no tiene solución para el número introducido, borralo e introduce otro");
-//			    	}
+			    	s.mostrarSudoku();
 		    	}
 		    	else{
 		    		System.out.println("Ha introducido una posicion no vacia");
@@ -65,8 +58,7 @@ public class Interfaz {
 		    	
 		    	if(s.correctoBorrar(fila, columna)){// si es correcto eliminar, lo elimina; si no muestra un mensaje de error
 		    		s.eliminarNumero(fila, columna);
-				    s.mostrarSudoku(n);
-//				    System.out.println("¿Correcto? : " + s.esPosibleResolver());//nos dice si despues de borrar se puede resolver el sudoku
+				    s.mostrarSudoku();
 		    	}
 		    	else{
 		    		System.out.println("Ha introducido una posicion vacia");
@@ -75,18 +67,15 @@ public class Interfaz {
 				
 			case(3):
 				s.volverEstadoInicial(); //vuelve al sudoku dado al inicio (lo resetea)
-				s.mostrarSudoku(n);
+				s.mostrarSudoku();
 				break;
 				
 			case(4):
-				//s.resolver(); //PARA PROBAR QUE LO RESUELVE BIEN
-				s = s.copiaResuelta();
-				s.mostrarSudoku(n);
-				terminado = true;
+				s = s.copiaResuelta();	//PARA PROBAR QUE LO RESUELVE BIEN
+				s.mostrarSudoku();
 				break;
 				
 			case (5):
-				terminado = true;
 				s = null; //para saber que ha abandonado
 				break;
 			
@@ -94,9 +83,5 @@ public class Interfaz {
 				System.out.println("Número inválido, introduzca otro"); //se muestra si el numero introducido es incorrecto
 				break;
 			}
-			
-		//}while(!terminado);
-		
-		//entrada.close(); //NOSUCHELEMENTSEXCEPTION
 	}
 }

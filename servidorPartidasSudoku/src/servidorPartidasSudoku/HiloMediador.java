@@ -14,13 +14,11 @@ public class HiloMediador implements Runnable {
 	private Socket socket;
 	private String cadena;
 	private Sudoku sudoku;
-	//private CyclicBarrier cb;
 	
 	public HiloMediador(Socket so, Sudoku su){
 		this.socket = so;
 		this.sudoku = su;
-		this.cadena = "";
-		//this.cb = cb;                       
+		this.cadena = "";                  
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -39,7 +37,7 @@ public class HiloMediador implements Runnable {
 			
 		} catch (IOException e) {
 			this.cadena="abandonado";
-		} finally{//cerrando os tenemos problemas, el cliente lee nulo
+		} finally{ //cerrando os tenemos problemas, el cliente lee nulo
 			//cerrar(os);
 			//cerrar(in);
 		}

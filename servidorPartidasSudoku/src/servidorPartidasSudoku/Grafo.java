@@ -43,13 +43,6 @@ public class Grafo implements Serializable{
 	}
 	
 	public List<Integer> listaVertices(){ //devuelve una lista con los vertices que tiene el grafo
-		/*Una forma es -> List<Integer> l = new ArrayList<>();
-			for(Integer x: tabla.keySet()){
-				l.add(x);
-			}
-			return (l);	*/
-		//ó sustituyendo al for se puede hacer -> l.addAll(tabla.keySet())
-			
 		return (new ArrayList<Integer>(this.tabla.keySet()));
 	}
 	
@@ -58,4 +51,3 @@ public class Grafo implements Serializable{
 		
 	}
 }
-/// OK

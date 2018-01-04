@@ -48,20 +48,9 @@ public class GrafoConColores extends Grafo implements Serializable{
 	
 	public void borrarColores(){ //elimina todo el contenido del map (vertices y colores)
 		this.tablaColores.clear();
-		/*for(Integer v: this.tablaColores.keySet()){
-			this.eliminarColorVertice(v);
-		}*/	//otra forma 
 	}
 	
 	public ArrayList<Integer> listaVerticesConColor(){ //devuelve un array con los vertices que tienen un color asociado
-		/*ArrayList<Integer> lista  = new ArrayList<Integer>(this.tablaColores.keySet());
-		 for(Integer i: lista){
-		 	if(this.tablaColores.get(lista.get(i)) == 0){
-		 		lista.remove(i);
-		 	}
-		 }
-		 return lista;*/
-		
 		return new ArrayList<Integer>(this.tablaColores.keySet());
 	}
 	
@@ -143,5 +132,3 @@ public class GrafoConColores extends Grafo implements Serializable{
 	}
 			
 }
-
-/// OK

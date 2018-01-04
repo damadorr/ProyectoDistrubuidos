@@ -6,8 +6,7 @@ import java.util.Random;
 
 public class SudokuConSolucion extends Sudoku implements Serializable {
 
-	private GrafoConColores gr; //declarado public para poder usarlo en el main
-	/// DEBERÍA SER PRIVADO Y DESDE EL MAIN USAR SOLO LOS MÉTODOS DE SudokuConSolucion
+	private GrafoConColores gr; 
 	private final int tamaño = matriz.length;
 	
 	public SudokuConSolucion(int [][] matriz){ //constructor
@@ -29,7 +28,7 @@ public class SudokuConSolucion extends Sudoku implements Serializable {
 		return auxSudoku;
 	}
 	
-	public boolean sonIguales(SudokuConSolucion s) {
+	public boolean sonIguales(SudokuConSolucion s) { //true si dos sudokus son iguales
 		for(int i=0; i<matriz.length; i++){
 			for(int j=0; j<matriz.length;j++){
 				if(!(s.matriz[i][j] == this.matriz[i][j])) {
@@ -117,7 +116,7 @@ public class SudokuConSolucion extends Sudoku implements Serializable {
 				color = r.nextInt(tamaño)+1;
 			}
 			
-			this.mostrarSudoku(tamaño); //mostramos el sudoku
+			this.mostrarSudoku(); //mostramos el sudoku
 			//gr.mostrarGrafo(); //mostramos el grafo asociado para ver si los colores son correctos
 		}
 	}
