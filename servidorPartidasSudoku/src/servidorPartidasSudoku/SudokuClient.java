@@ -1,3 +1,5 @@
+package servidorPartidasSudoku;
+
 
 
 import java.io.Closeable;
@@ -38,20 +40,29 @@ public class SudokuClient {
 				inter.mostrar(); //Si alguno de los otros clientes termina el sudoku, deberá terminar
 				if(inter.getSudoku() == null/*s.equals(null)*/){ //XQ
 					System.out.println("Has abandonado");
-					out.print("abandonado");
+					out.println("abandonado");
+					out.flush();
 					terminado = true;
 					break;
-				} else if(inter.getSudoku().equals(sResuelto)) { //Redefinido 
+				} else if(sResuelto.sonIguales(inter.getSudoku())) { //Redefinido 
 					System.out.println("Sudoku correcto");
-					out.print("correcto");
+					out.println("correcto");
+					out.flush();
 					terminado = true;
 				} else {
 					System.out.println("Sudoku erróneo, inténtelo de nuevo");
 				}
 			}
-			System.out.println(in.readLine());
+			String resultado= in.readLine();
+			if(resultado!=null) {
+				System.out.println(resultado);				
+			} else {
+				System.out.println("no has ganado... otra vez será");
+			}
 			
-		} catch (IOException | ClassNotFoundException e) {
+		} catch (IOException e) {
+			System.out.println("no has ganado... otra vez será");
+		} catch(ClassNotFoundException e) {
 			e.printStackTrace();
 		} finally {
 			cerrar(cliente);

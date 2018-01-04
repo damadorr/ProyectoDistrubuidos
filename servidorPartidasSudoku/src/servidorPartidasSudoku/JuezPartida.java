@@ -1,3 +1,5 @@
+package servidorPartidasSudoku;
+
 
 
 import java.io.Closeable;
@@ -21,12 +23,11 @@ public class JuezPartida extends TimerTask implements Runnable{
 	public void run() {
 		int [][] m= new int[9] [9];
 		SudokuConSolucion sudoku= new SudokuConSolucion(m);
-		sudoku.crearSudoku(25);
+		sudoku.crearSudoku(17);
 		ExecutorService pool = null;
 		PrintStream ps1 = null;
 		PrintStream ps2 = null;
 		PrintStream ps3 = null;
-		Timer t= new Timer();
 		
 		
 
@@ -38,12 +39,10 @@ public class JuezPartida extends TimerTask implements Runnable{
 				ps3 = new PrintStream(this.c3.getOutputStream());
 				
 				
-				String cadena1 = "";
-				String cadena2 = "";
-				String cadena3 = "";
-				HiloMediador h1 = new HiloMediador(this.c1, sudoku, cadena1);
-				HiloMediador h2 = new HiloMediador(this.c2, sudoku, cadena2);
-				HiloMediador h3 = new HiloMediador(this.c3, sudoku, cadena3);
+
+				HiloMediador h1 = new HiloMediador(this.c1, sudoku);
+				HiloMediador h2 = new HiloMediador(this.c2, sudoku);
+				HiloMediador h3 = new HiloMediador(this.c3, sudoku);
 				pool.execute(h1);
 				pool.execute(h2);
 				pool.execute(h3);
@@ -51,34 +50,36 @@ public class JuezPartida extends TimerTask implements Runnable{
 				long start = System.currentTimeMillis();
 				long end = System.currentTimeMillis();
 				
-					while((cadena1!="correcto" || cadena2!="correcto" || cadena3!="correcto") && (end - start <  1000)) {
+					while(!h1.getCadena().equalsIgnoreCase("correcto") && !h2.getCadena().equalsIgnoreCase("correcto") && !h3.getCadena().equalsIgnoreCase("correcto") && (end - start <  10000)) {
 						//System.out.println("esperando ganador...");
 						end = System.currentTimeMillis();
-						if(cadena1=="abandonado" && cadena2=="abandonado" && cadena3=="abandonado") {
+						if(h1.getCadena().equalsIgnoreCase("abandonado") && h2.getCadena().equalsIgnoreCase("abandonado") && h3.getCadena().equalsIgnoreCase("abandonado")) {
 							end = start + 900000;
 						}
 					}
-					if(cadena1=="correcto") {
+					if(h1.getCadena().equalsIgnoreCase("correcto")) {
 						ps1.println("HAS GANADO!");
-						ps2.println("no has ganado...");
-						ps3.println("no has ganado...");
-					}
-					if(cadena2=="correcto") {
-						ps2.println("HAS GANADO!");
-						ps1.println("no has ganado...");
-						ps3.println("no has ganado...");
-					}
-					if(cadena3=="correcto") {
-						ps3.println("HAS GANADO!");
-						ps2.println("no has ganado...");
-						ps1.println("no has ganado...");
-					}
-					else {
-						
-						ps1.println("Se ha acabado el tiempo ! o han abandonado todos"); //NO LO LEE SI ESTA MOSTRANDO INTERFAZ, EXCEPCIONES
-						ps2.println("Se ha acabado el tiempo ! o han abandonado todos");
-						ps3.println("Se ha acabado el tiempo ! o han abandonado todos");
-					}
+						ps1.flush();
+//						ps2.println("no has ganado...");
+//						ps3.println("no has ganado...");
+					} else if(h2.getCadena().equalsIgnoreCase("correcto")) {
+							ps2.println("HAS GANADO!");
+							ps2.flush();
+//							ps1.println("no has ganado...");
+//							ps3.println("no has ganado...");
+						} else if(h3.getCadena().equalsIgnoreCase("correcto")) {
+							ps3.println("HAS GANADO!");
+							ps3.flush();
+//							ps2.println("no has ganado...");
+//							ps1.println("no has ganado...");
+						} else {
+							ps1.println("no hay ganador"); //SOLO LO LEEN LOS QUE ABANDONAN ANTES DE QUE ACABE EL TIEMPO
+							ps2.println("no hay ganador");
+							ps3.println("no hay ganador");
+						}
+					
+					//solo envio mensaje al ganador
+					
 				
 			} catch (IOException e) {
 				e.printStackTrace();
