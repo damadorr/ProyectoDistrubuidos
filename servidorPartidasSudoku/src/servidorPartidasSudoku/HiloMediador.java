@@ -5,7 +5,6 @@ package servidorPartidasSudoku;
 import java.io.Closeable;
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
@@ -37,9 +36,6 @@ public class HiloMediador implements Runnable {
 			
 		} catch (IOException e) {
 			this.cadena="abandonado";
-		} finally{ //cerrando os tenemos problemas, el cliente lee nulo
-			//cerrar(os);
-			//cerrar(in);
 		}
 	}
 	

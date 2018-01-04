@@ -6,7 +6,6 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
-import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -65,7 +64,7 @@ public class JuezPartida extends TimerTask implements Runnable{
 						ps3.println("no hay ganador");
 					}
 				
-				//solo envio mensaje al ganador
+				//solo envio mensaje al ganador si lo hay
 				
 			
 		} catch (IOException e) {

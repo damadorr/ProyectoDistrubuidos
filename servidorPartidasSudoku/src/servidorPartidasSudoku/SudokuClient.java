@@ -27,12 +27,12 @@ public class SudokuClient {
 			
 			is = new ObjectInputStream(cliente.getInputStream());
 			SudokuConSolucion s = (SudokuConSolucion) is.readObject();	//recibimos el sudoku
-			SudokuConSolucion sResuelto = s.copiaResuelta();
-			sResuelto.mostrarSudoku();
+			SudokuConSolucion sResuelto = s.copiaResuelta();	// hacemos una copia resuelta para comprobar el resultado
+			sResuelto.mostrarSudoku();	//mostramos la solucion al cliente para la presentación, esto en realidad no debería hacerse
 			
 			Interfaz inter = new Interfaz(s);
 			boolean terminado = false;
-			while(!terminado && !cliente.isClosed()) {
+			while(!terminado) {
 				inter.mostrar(); //mostramos interfaz al cliente
 				if(inter.getSudoku() == null){ //si abandona
 					System.out.println("Has abandonado");

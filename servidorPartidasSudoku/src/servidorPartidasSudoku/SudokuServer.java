@@ -49,7 +49,7 @@ public class SudokuServer {
 					ps1.println("Comienza la partida");
 					ps1.flush();
 					
-					pool.execute(new JuezPartida(cliente1, cliente2, cliente3));
+					pool.execute(new JuezPartida(cliente1, cliente2, cliente3));	//lanzamos al juez de la partida de los clientes anteriores
 					
 				}catch(IOException e){
 					e.printStackTrace();
